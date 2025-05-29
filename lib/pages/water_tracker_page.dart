@@ -11,6 +11,56 @@ class WaterTrackerPage extends StatefulWidget {
 class _WaterTrackerPageState extends State<WaterTrackerPage> {
   final waterValue = ['100ml', '200ml', '400ml', '500ml', '800ml'];
   String? selectedValue;
+  int currentWater = 0;
+  int goal = 2000;
+
+  void _addWater(int amount) {
+    setState(() {
+      currentWater = (currentWater + amount).clamp(0, goal);
+    });
+  }
+
+  void _resetWater() {
+    setState(() {
+      currentWater = 0;
+      if (waterValue.isNotEmpty) {
+        selectedValue = waterValue.first;
+      }
+    });
+  }
+
+  void _showGoalInput() {
+    TextEditingController goalController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Enter New Goal'),
+          content: TextField(
+            controller: goalController,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(hintText: 'Enter new goal'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  goal = int.parse(goalController.text);
+                });
+                Navigator.pop(context);
+              },
+              child: Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   DropdownMenuItem<String> buildMenuItem(String item) {
     return DropdownMenuItem(
@@ -53,8 +103,12 @@ class _WaterTrackerPageState extends State<WaterTrackerPage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => _resetWater(),
             icon: Icon(Icons.restart_alt, color: Colors.white),
+          ),
+          IconButton(
+            onPressed: () => _showGoalInput(),
+            icon: Icon(Icons.edit, color: Colors.white),
           ),
         ],
       ),
@@ -70,7 +124,7 @@ class _WaterTrackerPageState extends State<WaterTrackerPage> {
                   height: 200,
                   width: 200,
                   child: CircularProgressIndicator(
-                    value: 0.5,
+                    value: currentWater / goal,
                     backgroundColor: Colors.white30,
                     color: Colors.white,
                     strokeWidth: 10,
@@ -79,7 +133,7 @@ class _WaterTrackerPageState extends State<WaterTrackerPage> {
                 Column(
                   children: [
                     Text(
-                      '50%',
+                      '${((currentWater / goal) * 100).toStringAsFixed(0)}%',
                       style: GoogleFonts.rubik(
                         textStyle: TextStyle(fontSize: 40, color: Colors.white),
                       ),
@@ -118,7 +172,7 @@ class _WaterTrackerPageState extends State<WaterTrackerPage> {
                   Column(
                     children: [
                       Text(
-                        '900ml',
+                        '$currentWater ml',
                         style: GoogleFonts.rubik(
                           fontSize: 22,
                           color: Colors.white,
@@ -146,7 +200,7 @@ class _WaterTrackerPageState extends State<WaterTrackerPage> {
                   Column(
                     children: [
                       Text(
-                        '2000ml',
+                        '$goal ml',
                         style: GoogleFonts.rubik(
                           fontSize: 22,
                           color: Colors.white,
@@ -216,6 +270,27 @@ class _WaterTrackerPageState extends State<WaterTrackerPage> {
               ),
             ),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          if (selectedValue != null) {
+            final amount = int.parse(selectedValue!.replaceAll('ml', ''));
+            _addWater(amount);
+          }
+        },
+        backgroundColor: Colors.lightBlue,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+        icon: const Icon(Icons.add, color: Colors.white, size: 30),
+        label: Text(
+          "Add",
+          style: GoogleFonts.rubik(
+            textStyle: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+              fontSize: 20,
+            ),
+          ),
         ),
       ),
     );
