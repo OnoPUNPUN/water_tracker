@@ -15,17 +15,17 @@ A simple and intuitive **Water Tracker** app built with **Flutter**. The app hel
 ### Home Screen:
 Track your water intake with a clean, intuitive layout.
 
-![Home Screen](screenshots/s1.png)
+| ![Home Screen](screenshots/s1.png) |
 
 ### Progress Tracker:
 See your daily hydration progress with an interactive circular progress bar.
 
-![Progress Tracker](screenshots/s2.png)
+| ![Progress Tracker](screenshots/s2.png) |
 
 ### Set New Goal:
 Easily set your daily water intake goal with a simple dialog box.
 
-![Set Goal](screenshots/s3.png)
+| ![Set Goal](screenshots/s3.png) |
 
 ## How to Use
 
