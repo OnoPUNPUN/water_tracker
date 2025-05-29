@@ -92,5 +92,5 @@ Contributions are welcome! If you have suggestions to improve the app, please fo
 
 For any questions, suggestions, or feedback, feel free to reach out! 💬
 
-- Email: your-email@example.com 📧
-- Project Link: [Water Tracker App GitHub](https://github.com/OnoPUNPUN/w
+- Email: tonmoywasimul04@gmail.com 📧
+- Project Link: [Water Tracker App GitHub](https://github.com/OnoPUNPUN/water_tracker.git)
